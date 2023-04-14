@@ -381,18 +381,20 @@ def login():
     user0.place(x=268, y=135)
     e1 = tk.Entry(frame1)
     e1.place(x=400, y=140)
+    e1.focus()
+    e1.bind('<Return>', lambda event: e2.focus())
 
     password0 = tk.Label(frame1, text='Enter Password', font=('Arial', 10))
     password0.place(x=270, y=200)
     e2 = tk.Entry(frame1)
     e2.place(x=400, y=205)
+    e2.bind('<Return>', lambda event: b1.invoke())
 
     b0 = tk.Button(frame1, text='<--', cursor='hand2', command=home)
     b0.place(x=0, y=0, width=35, height=35)
     b1 = tk.Button(frame1, text='Login', cursor='hand2', font=('Arial', 16), command=authentication)
     b1.place(x=360, y=270)
-    game.bind('<Return>', lambda event=None: b1.invoke())
-    
+     
     ask0 = tk.Label(frame1, text="Don't have an account?", font=('Arial', 11))
     ask0.place(x=270, y=350)
     no_account = tk.Button(frame1, text="Sign up", cursor='hand2', border=0, font=('Arial', 11), fg='#57a1f8', command=signup)
@@ -456,19 +458,26 @@ def signup():
     user1.place(x=270, y=135)
     e3 = tk.Entry(frame2)
     e3.place(x=400, y=140)
+    e3.focus()
+    e3.bind('<Return>', lambda event: e4.focus())
 
     password1 = tk.Label(frame2, text='Password', font=('Arial', 10))
     password1.place(x=272, y=200)
     e4 = tk.Entry(frame2)
     e4.place(x=400, y=205)
+    e4.bind('<Return>', lambda event: e5.focus())
+
 
     conf_password = tk.Label(frame2, text='Confirm Password', font=('Arial', 10))
     conf_password.place(x=225, y=265)
     e5 = tk.Entry(frame2)
     e5.place(x=400, y=270)
+    e5.bind('<Return>', lambda event: b3.invoke())
 
     b2 = tk.Button(frame2, text='<--', cursor='hand2', command=home)
     b2.place(x=0, y=0, width=35, height=35)
+
+    game.bind("<Return>", lambda event: b3.invoke() if e5.get() else focus_next_entry(event, e4))
     b3 = tk.Button(frame2, text='Signup', cursor='hand2', font=('Arial', 16), command=newaccount)
     b3.place(x=360, y=350)
 
