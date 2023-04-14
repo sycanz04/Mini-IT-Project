@@ -471,7 +471,6 @@ def signup():
     b2.place(x=0, y=0, width=35, height=35)
     b3 = tk.Button(frame2, text='Signup', cursor='hand2', font=('Arial', 16), command=newaccount)
     b3.place(x=360, y=350)
-    game.bind('<Return>', lambda event=None: b3.invoke())
 
 # Signup new account function
 def newaccount():
