@@ -67,6 +67,12 @@ def gamegui():
 
     
 def get_guess():
+    global xp
+    global new_xp 
+    global existing_xp
+
+    sum = 0
+
     with open("valid-wordle-words.txt", "r") as file:
         allText = file.read()
         allowed = list(map(str, allText.split()))
@@ -94,11 +100,41 @@ def get_guess():
             for i, letter in enumerate(guessed_word):
 
                 win = tk.Label(guess_frame, text=letter.upper())
-                win.grid(row=0, column=i, padx=10, pady=10)
+                win.grid(row=tries, column=i, padx=10, pady=10)
                 win.config(bg=GREEN, fg=BLACK)
 
+            xp = sum + 50
+
+              # create a variable to check if the username exists or not
+            username_exists = False
+            with open("lvl_database.txt", "r+") as lvldatafile:
+                lines = lvldatafile.readlines()
+                # Iterate over the lines 
+                # i represent the index of the current element
+                # line represent the username item that added to cart
+                # enumerate the function return an iterator that generate pair containing i and line
+                # lines is the data inside the cart file
+                for i, line in enumerate(lines):
+                    if line.startswith(username):
+                        xpParts = line.split(":")
+                        existing_xp = xpParts[1].strip()
+                        new_xp = int(existing_xp) + xp
+                        new_line = f"{username}:{new_xp}\n"
+                        lines[i] = new_line
+                        # Set the flag to True
+                        username_exists = True
+
+                if not username_exists:
+                    lvldatafile.write(f"{username}: {xp}\n")
+                else:
+                    # Go to the beginning of the file
+                    lvldatafile.seek(0)
+                    # Write the lines back to the file
+                    lvldatafile.writelines(lines)
+                    lvldatafile.close()
+
             messagebox.showinfo("Congratulations!", "You guessed the word!")
-            difficulty()
+            pro_bargui(existing_xp)
 
         # Checks if letters match
         else:
@@ -128,7 +164,7 @@ def get_guess():
             for i, (a, b) in enumerate(zip(guess_list, feedback)):
 
                     label = tk.Label(guess_frame, text=a.upper())
-                    label.grid(row=0, column=i, padx=10, pady=10)
+                    label.grid(row=tries, column=i, padx=10, pady=10)
 
                     # Letters match, same position
                     if a == b:
@@ -179,6 +215,11 @@ def gamegui_easy():
 # Game logic
 def get_guess_easy():
 
+    global xp
+    global new_xp 
+    global existing_xp
+    sum = 0
+
     with open("valid-wordle-words.txt", "r") as file:
         allText = file.read()
         allowed = list(map(str, allText.split()))
@@ -205,15 +246,44 @@ def get_guess_easy():
             for i, letter in enumerate(guessed_word):
 
                 win = tk.Label(guess_frame1, text=letter.upper())
-                win.grid(row=0, column=i, padx=10, pady=10)
+                win.grid(row=tries, column=i, padx=10, pady=10)
                 win.config(bg=GREEN, fg=BLACK)
 
+            xp = sum + 25
+
+              # create a variable to check if the username exists or not
+            username_exists = False
+            with open("lvl_database.txt", "r+") as lvldatafile:
+                lines = lvldatafile.readlines()
+                # Iterate over the lines 
+                # i represent the index of the current element
+                # line represent the username item that added to cart
+                # enumerate the function return an iterator that generate pair containing i and line
+                # lines is the data inside the cart file
+                for i, line in enumerate(lines):
+                    if line.startswith(username):
+                        xpParts = line.split(":")
+                        existing_xp = xpParts[1].strip()
+                        new_xp = int(existing_xp) + xp
+                        new_line = f"{username}:{new_xp}\n"
+                        lines[i] = new_line
+                        # Set the flag to True
+                        username_exists = True
+
+                if not username_exists:
+                    lvldatafile.write(f"{username}: {xp}\n")
+                else:
+                    # Go to the beginning of the file
+                    lvldatafile.seek(0)
+                    # Write the lines back to the file
+                    lvldatafile.writelines(lines)
+                    lvldatafile.close()
+
             messagebox.showinfo("Congratulations!", "You guessed the word!")
-            difficulty()
+            pro_bargui(existing_xp)
 
         # Checks if letters match
         else:
-
             feedback = []
             guess_list = [*guessed_word]
             select_list = [*selected_word]
@@ -239,7 +309,7 @@ def get_guess_easy():
             for i, (a, b) in enumerate(zip(guess_list, feedback)):
 
                     label = tk.Label(guess_frame1, text=a.upper())
-                    label.grid(row=0, column=i, padx=10, pady=10)
+                    label.grid(row=tries, column=i, padx=10, pady=10)
 
                     # Letters match, same position
                     if a == b:
@@ -278,7 +348,7 @@ def gamegui_hard():
     word_input.focus()
     
     # Button to submit guess
-    word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess_hard(), clear_text2(word_input)])
+    word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess_hard(username), clear_text2(word_input)])
     word_guess_button.place(x=380, y=360)
     game.bind('<Return>', lambda event=None: word_guess_button.invoke())
 
@@ -287,7 +357,11 @@ def gamegui_hard():
     button_logout.place(x=0, y=0)
 
 # Game logic
-def get_guess_hard():
+def get_guess_hard(username):
+    global xp
+    global new_xp 
+    global existing_xp
+    sum = 0
 
     with open("difficult-wordle-words.txt", "r") as file:
         allText = file.read()
@@ -315,11 +389,43 @@ def get_guess_hard():
             for i, letter in enumerate(guessed_word):
 
                 win = tk.Label(guess_frame2, text=letter.upper())
-                win.grid(row=0, column=i, padx=10, pady=10)
+                win.grid(row=tries, column=i, padx=10, pady=10)
                 win.config(bg=GREEN, fg=BLACK)
 
+            xp = sum + 100
+            username_exists = False
+            with open("lvl_database.txt", "r+") as lvldatafile:
+                lines = lvldatafile.readlines()
+
+                # Iterate over the lines 
+                # i represent the index of the current element
+                # line represent the username item that added to cart
+                # enumerate the function return an iterator that generate pair containing i and line
+                # lines is the data inside the cart file
+                for i, line in enumerate(lines):
+                    if line.startswith(username):
+                        xpParts = line.split(":")
+                        existing_xp = xpParts[1].strip()
+                        new_xp = int(existing_xp) + xp
+                        new_line = f"{username}:{new_xp}\n"
+                        lines[i] = new_line
+                        # Set the flag to True
+                        username_exists = True
+            
+
+                if not username_exists:
+                    lvldatafile.write(f"{username}: {xp}\n")
+
+                else:
+                    # Go to the beginning of the file
+                    lvldatafile.seek(0)
+                    # Write the lines back to the file
+                    lvldatafile.writelines(lines)
+                    lvldatafile.close()
+
+
             messagebox.showinfo("Congratulations!", "You guessed the word!")
-            difficulty()
+            pro_bargui(existing_xp)
 
         # Checks if letters match
         else:
@@ -349,7 +455,7 @@ def get_guess_hard():
             for i, (a, b) in enumerate(zip(guess_list, feedback)):
 
                     label = tk.Label(guess_frame2, text=a.upper())
-                    label.grid(row=0, column=i, padx=10, pady=10)
+                    label.grid(row=tries, column=i, padx=10, pady=10)
 
                     # Letters match, same position
                     if a == b:
@@ -369,6 +475,49 @@ def get_guess_hard():
     if tries == 5:
         messagebox.showerror("You failed!", f"The word is {selected_word.upper()}")
         difficulty()
+
+
+
+def pro_bargui(existing_xp):
+
+    xp1 = int(existing_xp)
+    frame25 = tk.Frame(game)
+    frame25.place(x=0, y=0, width=800, height=500)
+    xp_to_level_up = 100
+    # Create a progressbar widget
+    progress = ttk.Progressbar(frame25, orient="horizontal", length=300, mode="determinate")
+
+    # Set the initial value of the progress bar based on starting XP
+    progress["value"] = xp1 % xp_to_level_up
+
+    # Place the progress bar on the window
+    progress.place(relx=0.5, rely=0.5, anchor="center")
+
+    # Create a label to display current level
+    level_label = tk.Label(frame25, text=f"Level: {xp1//xp_to_level_up}",font=('Arial', 30))
+    level_label.place(relx=0.5, rely=0.3, anchor="center")
+
+    button1 = tk.Button(frame25, text=f"Next", command=lambda: pro_bar(new_xp,xp))
+    button1.place(relx=0.5, rely=0.7, anchor="center")
+
+    # Create a function that adds XP and checks if level up
+    def pro_bar(new_xp,xp):
+        xp2 = 100 - (xp1 % xp_to_level_up) 
+        xp3 = 100 - (new_xp % 100)
+        if xp == 100 or xp >= xp2 :
+            # If level up, reset start XP to remaining XP and increase level by 1
+            level_label.config(text=f"Level: {new_xp //100}")
+            progress["value"] = new_xp % 100
+            tk.messagebox.showinfo("Level Up!", f"You have reached level {int(new_xp / 100)}!")
+
+        else:
+            level_label.config(text=f"Level: {new_xp //100}")
+            progress["value"] = new_xp % 100
+            tk.messagebox.showinfo("Level Up!", f"You need {xp3} xp to reach next level!")
+            
+
+        button = tk.Button(frame25, text="                Back to Menu                ", command=lambda: difficulty())
+        button.place(relx=0.5, rely=0.7, anchor="center")
 
 
 # Login page
@@ -407,7 +556,7 @@ def login():
 # Login authentication function
 # Login authentication function
 def authentication():   
-    db = open("database.py","r")
+    db = open("database.txt","r")
     global username
     username = e1.get()
     password = e2.get()  
@@ -487,8 +636,8 @@ def signup():
 
 # Signup new account function
 def newaccount():
-    db = open("database.py", "r") #read the database textfile
-    lvl_db = open("lvl_database.py", "r")
+    db = open("database.txt", "r") #read the database textfile
+    lvl_db = open("lvl_database.txt", "r")
     new_username = e3.get()
     new_password = e4.get()
     new_conf_password = e5.get()
@@ -533,12 +682,12 @@ def newaccount():
         # Opens a file for both appending and reading. The file pointer is at the end of the file if the file exists. The file opens in the append mode. 
         # If the file does not exist, it creates a new file for reading and writing.    
         else:
-            db = open("database.py", "a+") 
+            db = open("database.txt", "a+") 
             db.write(new_username+", "+new_password+"\n") #\n a type of escape character that will create a new line when used. 
             db.close()
             user_xp = "0"
-            lvl_db = open("lvl_database.py", "a+")
-            lvl_db.write(new_username+", "+user_xp+"\n")
+            lvl_db = open ("lvl_database.txt","a+")
+            lvl_db.write(new_username+":"+user_xp+"\n")
             lvl_db.close()
             if messagebox.askyesno("Access Permitted!", "Account created successfully! Do you wish to login?", icon='info') == True:
                 login()
@@ -646,6 +795,43 @@ def rules():
     b4.place(x=330, y=380)
     game.bind('<Return>', lambda event=None: b4.invoke())
 
+def leaderboard():
+    frame35 = tk.Frame(game)
+    frame35.place(x=0, y=0, width=800, height=500)
+    line0 = tk.Label(frame35, text="Leaderboard", font=('Arial', 30))
+    line0.place(x=290, y=30)
+
+    # create a custom style
+    style = ttk.Style()
+    # configure the Treeview background color in the style
+    style.configure('Treeview', background='light blue',font=('Arial', 10,'bold'))
+    style.configure('Treeview.Heading', font=('Arial', 16,'bold'))
+    
+    columns = ('Name', 'Score')
+    leaderboard_tree = ttk.Treeview(frame35, columns=columns, show='headings')
+    leaderboard_tree.pack()
+    leaderboard_tree.place(x=300, y=100)
+    
+    # Define the column headings and their properties
+    leaderboard_tree.heading('Name', text='Name',anchor='center' )
+    leaderboard_tree.column('Name', width=100,anchor='center' )
+    leaderboard_tree.heading('Score', text='Score',anchor='center')
+    leaderboard_tree.column('Score', width=100,anchor='center')
+
+    # Read the leaderboard data from the text file
+    with open('lvl_database.txt', 'r') as f:
+        leaderboard_data = [line.strip().split(':') for line in f]
+
+    # Sort the leaderboard data based on the scores
+    sorted_leaderboard_data = sorted(leaderboard_data, key=lambda x: int(x[1]), reverse=True)
+
+    # Insert the sorted leaderboard data into the Treeview widget
+    for i, (name, score) in enumerate(sorted_leaderboard_data):
+        leaderboard_tree.insert('', tk.END, values=(name.upper(), score))
+    
+    b5 = tk.Button(frame35, text='<--', cursor='hand2', command=home)
+    b5.place(x=0, y=0, width=35, height=35)
+
 # Quit function 
 def quit():
     global game
@@ -663,6 +849,9 @@ def home():
     btn0.pack()
     btn1 = tk.Button(buttonframe0, text='Register', cursor='hand2', font=('Arial', 20), command=signup)
     btn1.pack()
+    btn2 = tk.Button(buttonframe0, text='Leaderboard', cursor='hand2', font=('Arial', 20), command=leaderboard)
+    btn2.pack()
+
     btn3 = tk.Button(buttonframe0, text='Quit', cursor='hand2', font=('Arial', 20), command=quit)
     btn3.pack()
 
