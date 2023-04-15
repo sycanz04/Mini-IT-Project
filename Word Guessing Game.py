@@ -48,9 +48,12 @@ def gamegui():
     frame4 = tk.Frame(game)
     frame4.place(x=0, y=0, width=800, height=600)
 
-    title0 = tk.Label(frame4, text='Word Guessing Game', font=('Arial', 30))
-    title0.place(x=210, y=10)
-    
+    title0 = tk.Label(frame4, text='Word Guessing Game', font=('Arial', 20))
+    title0.place(x=270, y=20)
+
+    title0 = tk.Label(frame4, text='Level: Default', font=('Arial', 10,'bold'))
+    title0.place(x=360, y=70)
+
     description = ttk.Label( frame4, text = "Please input a 5 letter word:",font=("Arial",7))
     description.place(x=343,y=390)
     tries = 0
@@ -58,13 +61,14 @@ def gamegui():
 
     # Input for word guess
     word_input = tk.Entry(frame4)
-    word_input.place(x=340, y=405)
+    word_input.place(x=343, y=405)
     word_input.focus()
+    word_input.bind('<Return>', lambda event:word_guess_button.invoke())
+
     
     # Button to submit guess
     word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess(), clear_text(word_input)])
     word_guess_button.place(x=380, y=435)
-    game.bind('<Return>', lambda event=None: word_guess_button.invoke())
 
     # button to return to difficulty screen
     button_logout = tk.Button(game, text = "<--", command=difficulty)
@@ -89,7 +93,7 @@ def get_guess():
 
         # create new frame for each guess
         guess_frame = tk.Frame(game)
-        guess_frame.place(x=320, y=100+50*tries , width=800, height=50)
+        guess_frame.place(x=320, y=110+50*tries , width=800, height=50)
 
         # Checks if length of words are the same
         if len(guessed_word) != len(selected_word):
@@ -104,7 +108,7 @@ def get_guess():
 
             for i, letter in enumerate(guessed_word):
 
-                win = tk.Label(guess_frame, text=letter.upper())
+                win = tk.Label(guess_frame, text=letter.upper(),font=('Arial', 10))
                 win.grid(row=tries, column=i, padx=10, pady=10)
                 win.config(bg=GREEN, fg=BLACK)
 
@@ -168,7 +172,7 @@ def get_guess():
 
             for i, (a, b) in enumerate(zip(guess_list, feedback)):
 
-                    label = tk.Label(guess_frame, text=a.upper())
+                    label = tk.Label(guess_frame, text=a.upper(),font=('Arial', 10))
                     label.grid(row=tries, column=i, padx=10, pady=10)
 
                     # Letters match, same position
@@ -203,21 +207,24 @@ def gamegui_easy():
     tries = 0
     selected_word = str(select_word())
 
-    title0 = tk.Label(frame4, text='Word Guessing Game', font=('Arial', 30))
-    title0.place(x=210, y=10)
+    title0 = tk.Label(frame4, text='Word Guessing Game', font=('Arial', 20))
+    title0.place(x=270, y=10)
+
+    title0 = tk.Label(frame4, text='Level: Easy', font=('Arial', 10,'bold'))
+    title0.place(x=365, y=60)
     
     description = ttk.Label( frame4, text = "Please input a 5 letter word:",font=("Arial",7))
     description.place(x=343,y=485)
 
     # Input for word guess
     word_input = tk.Entry(frame4)
-    word_input.place(x=340, y=500)
+    word_input.place(x=343, y=500)
     word_input.focus()
+    word_input.bind('<Return>', lambda event:word_guess_button.invoke())
     
     # Button to submit guess
     word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess_easy(), clear_text(word_input)])
     word_guess_button.place(x=380, y=535)
-    game.bind('<Return>', lambda event=None: word_guess_button.invoke())
 
     # button to return to difficulty screen
     button_logout = tk.Button(game, text = "<--", command=difficulty)
@@ -255,7 +262,7 @@ def get_guess_easy():
 
             for i, letter in enumerate(guessed_word):
 
-                win = tk.Label(guess_frame1, text=letter.upper())
+                win = tk.Label(guess_frame1, text=letter.upper(),font=('Arial', 10))
                 win.grid(row=tries, column=i, padx=10, pady=10)
                 win.config(bg=GREEN, fg=BLACK)
 
@@ -318,7 +325,7 @@ def get_guess_easy():
 
             for i, (a, b) in enumerate(zip(guess_list, feedback)):
 
-                    label = tk.Label(guess_frame1, text=a.upper())
+                    label = tk.Label(guess_frame1, text=a.upper(),font=('Arial', 10))
                     label.grid(row=tries, column=i, padx=10, pady=10)
 
                     # Letters match, same position
@@ -349,9 +356,11 @@ def gamegui_hard():
     frame4 = tk.Frame(game)
     frame4.place(x=0, y=0, width=800, height=600)
 
-    title0 = tk.Label(frame4, text='Word Guessing Game', font=('Arial', 30))
-    title0.place(x=210, y=10)
+    title0 = tk.Label(frame4, text='Word Guessing Game', font=('Arial', 20))
+    title0.place(x=270, y=20)
 
+    title0 = tk.Label(frame4, text='Level: Hard', font=('Arial', 10,'bold'))
+    title0.place(x=365, y=70)
     
     description = ttk.Label( frame4, text = "Please input a 7 letter word:",font=("Arial",7))
     description.place(x=343,y=390)
@@ -361,13 +370,13 @@ def gamegui_hard():
 
     # Input for word guess
     word_input = tk.Entry(frame4)
-    word_input.place(x=340, y=405)
+    word_input.place(x=343, y=405)
     word_input.focus()
+    word_input.bind('<Return>', lambda event:word_guess_button.invoke())
     
     # Button to submit guess
     word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess_hard(username), clear_text2(word_input)])
     word_guess_button.place(x=380, y=435)
-    game.bind('<Return>', lambda event=None: word_guess_button.invoke())
 
     # button to return to difficulty screen
     button_logout = tk.Button(game, text = "<--", command=difficulty)
@@ -389,7 +398,7 @@ def get_guess_hard(username):
     global tries
     if tries < 5:
         guess_frame2 = tk.Frame(game)
-        guess_frame2.place(x=290, y=100+50*tries, width=800, height=50)
+        guess_frame2.place(x=290, y=110+50*tries, width=800, height=50)
 
 
         # Checks if length of words are the same
@@ -405,7 +414,7 @@ def get_guess_hard(username):
 
             for i, letter in enumerate(guessed_word):
 
-                win = tk.Label(guess_frame2, text=letter.upper())
+                win = tk.Label(guess_frame2, text=letter.upper(),font=('Arial', 10))
                 win.grid(row=tries, column=i, padx=10, pady=10)
                 win.config(bg=GREEN, fg=BLACK)
 
@@ -471,7 +480,7 @@ def get_guess_hard(username):
 
             for i, (a, b) in enumerate(zip(guess_list, feedback)):
 
-                    label = tk.Label(guess_frame2, text=a.upper())
+                    label = tk.Label(guess_frame2, text=a.upper(),font=('Arial', 10))
                     label.grid(row=tries, column=i, padx=10, pady=10)
 
                     # Letters match, same position
