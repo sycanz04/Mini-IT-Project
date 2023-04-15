@@ -54,14 +54,15 @@ def gamegui():
     # Input for word guess
     word_input = tk.Entry(frame4)
     word_input.place(x=340, y=330)
+    word_input.focus()
     
     # Button to submit guess
-    word_guess_button = tk.Button(frame4, text="Submit", cursor='hand2', command=lambda:[get_guess(), clear_text(word_input)])
+    word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess(), clear_text(word_input)])
     word_guess_button.place(x=380, y=360)
     game.bind('<Return>', lambda event=None: word_guess_button.invoke())
 
     # button to return to difficulty screen
-    button_logout = tk.Button(game, text = "<--",cursor='hand2', command=difficulty)
+    button_logout = tk.Button(game, text = "<--", command=difficulty)
     button_logout.place(x=0, y=0)
 
     
@@ -164,6 +165,7 @@ def gamegui_easy():
     # Input for word guess
     word_input = tk.Entry(frame4)
     word_input.place(x=340, y=405)
+    word_input.focus()
     
     # Button to submit guess
     word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess_easy(), clear_text(word_input)])
@@ -171,7 +173,7 @@ def gamegui_easy():
     game.bind('<Return>', lambda event=None: word_guess_button.invoke())
 
     # button to return to difficulty screen
-    button_logout = tk.Button(game, text = "<--", cursor='hand2', command=difficulty)
+    button_logout = tk.Button(game, text = "<--", command=difficulty)
     button_logout.place(x=0, y=0)
 
 # Game logic
@@ -273,13 +275,15 @@ def gamegui_hard():
     # Input for word guess
     word_input = tk.Entry(frame4)
     word_input.place(x=340, y=330)
+    word_input.focus()
     
     # Button to submit guess
     word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess_hard(), clear_text2(word_input)])
     word_guess_button.place(x=380, y=360)
+    game.bind('<Return>', lambda event=None: word_guess_button.invoke())
 
     # button to return to difficulty screen
-    button_logout = tk.Button(game, text = "<--", cursor='hand2', command=difficulty)
+    button_logout = tk.Button(game, text = "<--", command=difficulty)
     button_logout.place(x=0, y=0)
 
 # Game logic
@@ -394,7 +398,7 @@ def login():
     b0.place(x=0, y=0, width=35, height=35)
     b1 = tk.Button(frame1, text='Login', cursor='hand2', font=('Arial', 16), command=authentication)
     b1.place(x=360, y=270)
-     
+    
     ask0 = tk.Label(frame1, text="Don't have an account?", font=('Arial', 11))
     ask0.place(x=270, y=350)
     no_account = tk.Button(frame1, text="Sign up", cursor='hand2', border=0, font=('Arial', 11), fg='#57a1f8', command=signup)
@@ -468,6 +472,7 @@ def signup():
     e4.bind('<Return>', lambda event: e5.focus())
 
 
+
     conf_password = tk.Label(frame2, text='Confirm Password', font=('Arial', 10))
     conf_password.place(x=225, y=265)
     e5 = tk.Entry(frame2)
@@ -477,7 +482,6 @@ def signup():
     b2 = tk.Button(frame2, text='<--', cursor='hand2', command=home)
     b2.place(x=0, y=0, width=35, height=35)
 
-    game.bind("<Return>", lambda event: b3.invoke() if e5.get() else focus_next_entry(event, e4))
     b3 = tk.Button(frame2, text='Signup', cursor='hand2', font=('Arial', 16), command=newaccount)
     b3.place(x=360, y=350)
 
@@ -613,7 +617,7 @@ def difficulty():
     description.pack(side = "left", padx = 5)
     level_frame.pack(pady = 20)
 
-    button_logout = tk.Button(frame, text = "Log Out", cursor='hand2', command=home)
+    button_logout = tk.Button(frame, text = "Log Out", command=home)
     button_logout.place(x=0, y=0)
 
 # Game rules
