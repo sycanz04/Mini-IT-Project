@@ -37,8 +37,8 @@ LIGHTRED = "#ff758f"
 LIGHTORANGE = "#fec89a"
 
 game.title("Word Guessing Game")
-game.geometry("800x500")
-game.config(bg=BLACK)
+game.geometry("800x600")
+
 
 def gamegui():
     global word_input
@@ -46,19 +46,24 @@ def gamegui():
     global selected_word
     
     frame4 = tk.Frame(game)
-    frame4.place(x=0, y=0, width=800, height=500)
-        
+    frame4.place(x=0, y=0, width=800, height=600)
+
+    title0 = tk.Label(frame4, text='Word Guessing Game', font=('Arial', 30))
+    title0.place(x=210, y=10)
+    
+    description = ttk.Label( frame4, text = "Please input a 5 letter word:",font=("Arial",7))
+    description.place(x=343,y=390)
     tries = 0
     selected_word = str(select_word())
 
     # Input for word guess
     word_input = tk.Entry(frame4)
-    word_input.place(x=340, y=330)
+    word_input.place(x=340, y=405)
     word_input.focus()
     
     # Button to submit guess
     word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess(), clear_text(word_input)])
-    word_guess_button.place(x=380, y=360)
+    word_guess_button.place(x=380, y=435)
     game.bind('<Return>', lambda event=None: word_guess_button.invoke())
 
     # button to return to difficulty screen
@@ -84,7 +89,7 @@ def get_guess():
 
         # create new frame for each guess
         guess_frame = tk.Frame(game)
-        guess_frame.place(x=320, y=50*tries, width=800, height=50)
+        guess_frame.place(x=320, y=100+50*tries , width=800, height=50)
 
         # Checks if length of words are the same
         if len(guessed_word) != len(selected_word):
@@ -105,7 +110,7 @@ def get_guess():
 
             xp = sum + 50
 
-              # create a variable to check if the username exists or not
+            # create a variable to check if the username exists or not
             username_exists = False
             with open("lvl_database.txt", "r+") as lvldatafile:
                 lines = lvldatafile.readlines()
@@ -193,19 +198,25 @@ def gamegui_easy():
     global selected_word
     
     frame4 = tk.Frame(game)
-    frame4.place(x=0, y=0, width=800, height=500)
+    frame4.place(x=0, y=0, width=800, height=600)
         
     tries = 0
     selected_word = str(select_word())
 
+    title0 = tk.Label(frame4, text='Word Guessing Game', font=('Arial', 30))
+    title0.place(x=210, y=10)
+    
+    description = ttk.Label( frame4, text = "Please input a 5 letter word:",font=("Arial",7))
+    description.place(x=343,y=485)
+
     # Input for word guess
     word_input = tk.Entry(frame4)
-    word_input.place(x=340, y=405)
+    word_input.place(x=340, y=500)
     word_input.focus()
     
     # Button to submit guess
     word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess_easy(), clear_text(word_input)])
-    word_guess_button.place(x=380, y=435)
+    word_guess_button.place(x=380, y=535)
     game.bind('<Return>', lambda event=None: word_guess_button.invoke())
 
     # button to return to difficulty screen
@@ -214,7 +225,6 @@ def gamegui_easy():
 
 # Game logic
 def get_guess_easy():
-
     global xp
     global new_xp 
     global existing_xp
@@ -229,7 +239,7 @@ def get_guess_easy():
     global tries
     if tries < 10:
         guess_frame1 = tk.Frame(game)
-        guess_frame1.place(x=320, y=50*tries, width=800, height=50)
+        guess_frame1.place(x=320, y=80+40*tries, width=800, height=30)
 
 
         # Checks if length of words are the same
@@ -337,19 +347,26 @@ def gamegui_hard():
     global selected_word
     
     frame4 = tk.Frame(game)
-    frame4.place(x=0, y=0, width=800, height=500)
+    frame4.place(x=0, y=0, width=800, height=600)
+
+    title0 = tk.Label(frame4, text='Word Guessing Game', font=('Arial', 30))
+    title0.place(x=210, y=10)
+
+    
+    description = ttk.Label( frame4, text = "Please input a 7 letter word:",font=("Arial",7))
+    description.place(x=343,y=390)
         
     tries = 0
     selected_word = str(select_word2())
 
     # Input for word guess
     word_input = tk.Entry(frame4)
-    word_input.place(x=340, y=330)
+    word_input.place(x=340, y=405)
     word_input.focus()
     
     # Button to submit guess
     word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess_hard(username), clear_text2(word_input)])
-    word_guess_button.place(x=380, y=360)
+    word_guess_button.place(x=380, y=435)
     game.bind('<Return>', lambda event=None: word_guess_button.invoke())
 
     # button to return to difficulty screen
@@ -372,7 +389,7 @@ def get_guess_hard(username):
     global tries
     if tries < 5:
         guess_frame2 = tk.Frame(game)
-        guess_frame2.place(x=290, y=50*tries, width=800, height=50)
+        guess_frame2.place(x=290, y=100+50*tries, width=800, height=50)
 
 
         # Checks if length of words are the same
@@ -482,7 +499,7 @@ def pro_bargui(existing_xp):
 
     xp1 = int(existing_xp)
     frame25 = tk.Frame(game)
-    frame25.place(x=0, y=0, width=800, height=500)
+    frame25.place(x=0, y=0, width=800, height=600)
     xp_to_level_up = 100
     # Create a progressbar widget
     progress = ttk.Progressbar(frame25, orient="horizontal", length=300, mode="determinate")
@@ -525,33 +542,33 @@ def login():
     global e1
     global e2
     frame1 = tk.Frame(game)
-    frame1.place(x=0, y=0, width=800, height=500)
+    frame1.place(x=0, y=0, width=800, height=600)
 
     title0 = tk.Label(frame1, text='Login Page', font=('Arial', 30))
-    title0.place(x=305, y=30)
+    title0.place(x=305, y=80)
 
     user0 = tk.Label(frame1, text='Enter Username', font=('Arial', 10))
-    user0.place(x=268, y=135)
+    user0.place(x=268, y=185)
     e1 = tk.Entry(frame1)
-    e1.place(x=400, y=140)
+    e1.place(x=400, y=190)
     e1.focus()
     e1.bind('<Return>', lambda event: e2.focus())
 
     password0 = tk.Label(frame1, text='Enter Password', font=('Arial', 10))
-    password0.place(x=270, y=200)
+    password0.place(x=270, y=250)
     e2 = tk.Entry(frame1)
-    e2.place(x=400, y=205)
+    e2.place(x=400, y=255)
     e2.bind('<Return>', lambda event: b1.invoke())
 
-    b0 = tk.Button(frame1, text='<--', cursor='hand2', command=home)
+    b0 = tk.Button(frame1, text='<--', cursor='hand2', command=sign_out)
     b0.place(x=0, y=0, width=35, height=35)
     b1 = tk.Button(frame1, text='Login', cursor='hand2', font=('Arial', 16), command=authentication)
-    b1.place(x=360, y=270)
+    b1.place(x=360, y=320)
     
     ask0 = tk.Label(frame1, text="Don't have an account?", font=('Arial', 11))
-    ask0.place(x=270, y=350)
+    ask0.place(x=270, y=400)
     no_account = tk.Button(frame1, text="Sign up", cursor='hand2', border=0, font=('Arial', 11), fg='#57a1f8', command=signup)
-    no_account.place(x=430, y=349)
+    no_account.place(x=430, y=399)
 
 # Login authentication function
 # Login authentication function
@@ -574,16 +591,15 @@ def authentication():
     try:
         if data[username]:
         #if data contain the username try following
-                if password == data[username]:
-                #check if password and username is it match
-                    rules()
+            if password == data[username]:
+            #check if password and username is it match
+                rules()
 
+            else:
+                if messagebox.askyesno("Error", "Password or Username incorrect. Do you want to try again?", icon='error') == True:
+                    login()
                 else:
-                    if messagebox.askyesno("Error", "Password or Username incorrect. Do you want to try again?", icon='error') == True:
-                        login()
-                    else:
-                        home()
-                    
+                    home()
         else:
             if messagebox.askyesno("Error", "Username or password doesn't exist. Do you want to try again?", icon='error') == True:
                 login()
@@ -602,37 +618,37 @@ def signup():
     global e5
     
     frame2 = tk.Frame(game)
-    frame2.place(x=0, y=0, width=800, height=500)
+    frame2.place(x=0, y=0, width=800, height=600)
 
     title1 = tk.Label(frame2, text='Signup Page', font=('Arial', 30))
-    title1.place(x=285, y=30)
+    title1.place(x=285, y=80)
 
     user1 = tk.Label(frame2, text='Username', font=('Arial', 10))
-    user1.place(x=270, y=135)
+    user1.place(x=270, y=185)
     e3 = tk.Entry(frame2)
-    e3.place(x=400, y=140)
+    e3.place(x=400, y=190)
     e3.focus()
     e3.bind('<Return>', lambda event: e4.focus())
 
     password1 = tk.Label(frame2, text='Password', font=('Arial', 10))
-    password1.place(x=272, y=200)
+    password1.place(x=272, y=250)
     e4 = tk.Entry(frame2)
-    e4.place(x=400, y=205)
+    e4.place(x=400, y=255)
     e4.bind('<Return>', lambda event: e5.focus())
 
 
 
     conf_password = tk.Label(frame2, text='Confirm Password', font=('Arial', 10))
-    conf_password.place(x=225, y=265)
+    conf_password.place(x=225, y=315)
     e5 = tk.Entry(frame2)
-    e5.place(x=400, y=270)
+    e5.place(x=400, y=320)
     e5.bind('<Return>', lambda event: b3.invoke())
 
-    b2 = tk.Button(frame2, text='<--', cursor='hand2', command=home)
+    b2 = tk.Button(frame2, text='<--', cursor='hand2', command=sign_out)
     b2.place(x=0, y=0, width=35, height=35)
 
     b3 = tk.Button(frame2, text='Signup', cursor='hand2', font=('Arial', 16), command=newaccount)
-    b3.place(x=360, y=350)
+    b3.place(x=360, y=400)
 
 # Signup new account function
 def newaccount():
@@ -696,16 +712,16 @@ def newaccount():
             print("Success!")
 
 def difficulty():
-    frame = tk.Frame(game)
-    frame.place(x=0, y=0, width=800, height=500)
+    frame10 = tk.Frame(game)
+    frame10.place(x=0, y=0, width=800, height=600)
 
     # title
-    title_label = ttk.Label(frame, text = "Choose your Difficulty level", font = "Calibri 24 bold") # font = "font fontsize"
+    title_label = ttk.Label(frame10, text = "Choose your Difficulty level", font = "Calibri 24 bold") # font = "font fontsize"
     title_label.pack(pady = 30)
 
     # difficulty descriptions
     # easy
-    level_frame = ttk.Frame(frame)
+    level_frame = ttk.Frame(frame10)
     button1 = tk.Button(
         level_frame,
         text = "EASY",
@@ -726,7 +742,7 @@ def difficulty():
     level_frame.pack(pady = 20)
 
     #default
-    level_frame = ttk.Frame(frame)
+    level_frame = ttk.Frame(frame10)
     button = tk.Button(
         level_frame,
         text = "DEFAULT",
@@ -746,7 +762,7 @@ def difficulty():
     level_frame.pack(pady = 20)
 
     # hard
-    level_frame = ttk.Frame(frame)
+    level_frame = ttk.Frame(frame10)
     button = tk.Button(
         level_frame,
         text = "HARD",
@@ -766,13 +782,13 @@ def difficulty():
     description.pack(side = "left", padx = 5)
     level_frame.pack(pady = 20)
 
-    button_logout = tk.Button(frame, text = "Log Out", command=home)
+    button_logout = tk.Button(frame10, text = "Log Out", command=sign_out)
     button_logout.place(x=0, y=0)
 
 # Game rules
 def rules():
     frame3 = tk.Frame(game)
-    frame3.place(x=0, y=0, width=800, height=500)
+    frame3.place(x=0, y=0, width=800, height=600)
 
     line0 = tk.Label(frame3, text="Game Rules", font=('Arial', 30))
     line0.place(x=280, y=30)
@@ -789,17 +805,16 @@ def rules():
     line6 = tk.Label(frame3, text='5. Answers are NEVER plurals', font=('Arial', 13))
     line6.place(x=100, y=310)
 
-    b5 = tk.Button(frame3, text='<--', cursor='hand2', command=home)
+    b5 = tk.Button(frame3, text='<--', cursor='hand2', command=sign_out)
     b5.place(x=0, y=0, width=35, height=35)
     b4 = tk.Button(frame3, text="I understand", cursor='hand2', font=('Arial', 15), command=difficulty)
     b4.place(x=330, y=380)
-    game.bind('<Return>', lambda event=None: b4.invoke())
 
 def leaderboard():
     frame35 = tk.Frame(game)
-    frame35.place(x=0, y=0, width=800, height=500)
-    line0 = tk.Label(frame35, text="Leaderboard", font=('Arial', 30))
-    line0.place(x=290, y=30)
+    frame35.place(x=0, y=0, width=800, height=600)
+    line0 = tk.Label(frame35, text="Leaderboard", font=('Arial', 40))
+    line0.place(x=255, y=30)
 
     # create a custom style
     style = ttk.Style()
@@ -810,7 +825,7 @@ def leaderboard():
     columns = ('Name', 'Score')
     leaderboard_tree = ttk.Treeview(frame35, columns=columns, show='headings')
     leaderboard_tree.pack()
-    leaderboard_tree.place(x=300, y=100)
+    leaderboard_tree.place(x=300, y=150)
     
     # Define the column headings and their properties
     leaderboard_tree.heading('Name', text='Name',anchor='center' )
@@ -829,8 +844,16 @@ def leaderboard():
     for i, (name, score) in enumerate(sorted_leaderboard_data):
         leaderboard_tree.insert('', tk.END, values=(name.upper(), score))
     
-    b5 = tk.Button(frame35, text='<--', cursor='hand2', command=home)
+    b5 = tk.Button(frame35, text='<--', cursor='hand2', command=sign_out)
     b5.place(x=0, y=0, width=35, height=35)
+
+            
+def sign_out():
+    # clear the user's authentication status
+    # for example, by setting a global variable to None
+    global username
+    username = None
+    home()
 
 # Quit function 
 def quit():
@@ -839,20 +862,19 @@ def quit():
 
 # GUI home page 
 def home():
-    label = tk.Label(game, text="Word Guessing Game", font=('Arial', 25))
+    label = tk.Label(game, text="Word Guessing Game", font=('Arial', 35))
     label.place(x=0, y=0, width=800, height=130)
 
     buttonframe0 = tk.Frame(game)
     buttonframe0.place(x=0, y=120, width=800, height=500)
 
-    btn0 = tk.Button(buttonframe0, text='Login', cursor='hand2', font=('Arial', 20), command=login)
+    btn0 = tk.Button(buttonframe0, text='Login', cursor='hand2', font=('Arial', 25), command=login)
     btn0.pack()
-    btn1 = tk.Button(buttonframe0, text='Register', cursor='hand2', font=('Arial', 20), command=signup)
+    btn1 = tk.Button(buttonframe0, text='Register', cursor='hand2', font=('Arial', 25), command=signup)
     btn1.pack()
-    btn2 = tk.Button(buttonframe0, text='Leaderboard', cursor='hand2', font=('Arial', 20), command=leaderboard)
+    btn2 = tk.Button(buttonframe0, text='Leaderboard', cursor='hand2', font=('Arial', 25), command=leaderboard)
     btn2.pack()
-
-    btn3 = tk.Button(buttonframe0, text='Quit', cursor='hand2', font=('Arial', 20), command=quit)
+    btn3 = tk.Button(buttonframe0, text='Quit', cursor='hand2', font=('Arial', 25), command=quit)
     btn3.pack()
 
 home()
