@@ -1,0 +1,11 @@
+kekyici:1500
+aiden:600
+janelle:600
+elmo:25
+king:75
+fish:25
+burger:50
+hand:75
+wolf:225
+sleep:50
+kioku:50

@@ -19,11 +19,7 @@ def select_word2():
     
 # Clears input    
 def clear_text(text):
-    text.delete(0, 5)
-
-# Clears input (for hard mode)   
-def clear_text2(text):
-    text.delete(0, 7)
+    text.delete(0, tk.END)
 
 # Game window
 game = tk.Tk()
@@ -375,7 +371,7 @@ def gamegui_hard():
     word_input.bind('<Return>', lambda event:word_guess_button.invoke())
     
     # Button to submit guess
-    word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess_hard(username), clear_text2(word_input)])
+    word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess_hard(username), clear_text(word_input)])
     word_guess_button.place(x=380, y=435)
 
     # button to return to difficulty screen
@@ -565,7 +561,7 @@ def login():
 
     password0 = tk.Label(frame1, text='Enter Password', font=('Arial', 10))
     password0.place(x=270, y=250)
-    e2 = tk.Entry(frame1)
+    e2 = tk.Entry(frame1, show='*')
     e2.place(x=400, y=255)
     e2.bind('<Return>', lambda event: b1.invoke())
 
@@ -641,7 +637,7 @@ def signup():
 
     password1 = tk.Label(frame2, text='Password', font=('Arial', 10))
     password1.place(x=272, y=250)
-    e4 = tk.Entry(frame2)
+    e4 = tk.Entry(frame2, show='*')
     e4.place(x=400, y=255)
     e4.bind('<Return>', lambda event: e5.focus())
 
@@ -649,7 +645,7 @@ def signup():
 
     conf_password = tk.Label(frame2, text='Confirm Password', font=('Arial', 10))
     conf_password.place(x=225, y=315)
-    e5 = tk.Entry(frame2)
+    e5 = tk.Entry(frame2, show='*')
     e5.place(x=400, y=320)
     e5.bind('<Return>', lambda event: b3.invoke())
 
