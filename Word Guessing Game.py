@@ -35,7 +35,6 @@ LIGHTORANGE = "#fec89a"
 game.title("Word Guessing Game")
 game.geometry("800x600")
 
-
 def gamegui():
     global word_input
     global tries 
@@ -60,17 +59,15 @@ def gamegui():
     word_input.place(x=343, y=405)
     word_input.focus()
     word_input.bind('<Return>', lambda event:word_guess_button.invoke())
-
     
     # Button to submit guess
     word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess(), clear_text(word_input)])
     word_guess_button.place(x=380, y=435)
 
-    # button to return to difficulty screen
+    # Button to return to difficulty menu
     button_logout = tk.Button(game, text = "<--", command=difficulty)
     button_logout.place(x=0, y=0)
 
-    
 def get_guess():
     global xp
     global new_xp 
@@ -89,7 +86,7 @@ def get_guess():
 
         # create new frame for each guess
         guess_frame = tk.Frame(game)
-        guess_frame.place(x=320, y=110+50*tries , width=800, height=50)
+        guess_frame.place(x=310, y=110+50*tries , width=800, height=50)
 
         # Checks if length of words are the same
         if len(guessed_word) != len(selected_word):
@@ -104,22 +101,25 @@ def get_guess():
 
             for i, letter in enumerate(guessed_word):
 
-                win = tk.Label(guess_frame, text=letter.upper(),font=('Arial', 10))
-                win.grid(row=tries, column=i, padx=10, pady=10)
-                win.config(bg=GREEN, fg=BLACK)
+                square_frame = tk.Frame(guess_frame, width=20, height=20, bg=GREEN)
+                square_frame.grid(row=tries, column=i, padx=10, pady=10)
+
+                win = tk.Label(square_frame, text=letter.upper(),font=('Arial', 10), fg=BLACK, bg=GREEN)
+                win.place(relx=0.5, rely=0.5, anchor='center')
 
             xp = sum + 50
 
-            # create a variable to check if the username exists or not
+            # Create a variable to check if the username exists or not
             username_exists = False
             with open("lvl_database.txt", "r+") as lvldatafile:
                 lines = lvldatafile.readlines()
                 # Iterate over the lines 
-                # i represent the index of the current element
-                # line represent the username item that added to cart
-                # enumerate the function return an iterator that generate pair containing i and line
-                # lines is the data inside the cart file
+                # i represents the index of the current element
+                # Line represent the username item that added to cart
+                # Enumerate the function return an iterator that generate pair containing i and line
+                # Lines is the data inside the cart file
                 for i, line in enumerate(lines):
+
                     if line.startswith(username):
                         xpParts = line.split(":")
                         existing_xp = xpParts[1].strip()
@@ -131,6 +131,7 @@ def get_guess():
 
                 if not username_exists:
                     lvldatafile.write(f"{username}: {xp}\n")
+
                 else:
                     # Go to the beginning of the file
                     lvldatafile.seek(0)
@@ -168,20 +169,26 @@ def get_guess():
 
             for i, (a, b) in enumerate(zip(guess_list, feedback)):
 
-                    label = tk.Label(guess_frame, text=a.upper(),font=('Arial', 10))
-                    label.grid(row=tries, column=i, padx=10, pady=10)
+                square_frame = tk.Frame(guess_frame, width=20, height=20)
+                square_frame.grid(row=tries, column=i, padx=10, pady=10)
 
-                    # Letters match, same position
-                    if a == b:
-                        label.config(bg=GREEN, fg=BLACK)
+                label = tk.Label(square_frame, text=a.upper(), font=('Arial', 10))
+                label.place(relx=0.5, rely=0.5, anchor='center')
 
-                    # Letters match, wrong position
-                    elif b == "$":
-                        label.config(bg=YELLOW, fg=BLACK)
+                # Letters match, same position
+                if a == b:
+                    square_frame.config(bg=GREEN)
+                    label.config(bg=GREEN, fg=BLACK)
 
-                    # Letters don't match            
-                    else:
-                        label.config(bg=BLACK, fg=WHITE)
+                # Letters match, wrong position
+                elif b == "$":
+                    square_frame.config(bg=YELLOW)
+                    label.config(bg=YELLOW, fg=BLACK)
+
+                # Letters don't match            
+                else:
+                    square_frame.config(bg=BLACK)
+                    label.config(bg=BLACK, fg=WHITE)
 
             tries += 1
 
@@ -189,8 +196,6 @@ def get_guess():
     if tries == 5:
         messagebox.showerror("You failed!", f"The word is {selected_word.upper()}")
         difficulty()
-
-    
 
 def gamegui_easy():
     global word_input
@@ -222,7 +227,7 @@ def gamegui_easy():
     word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess_easy(), clear_text(word_input)])
     word_guess_button.place(x=380, y=535)
 
-    # button to return to difficulty screen
+    # Button to return to difficulty menu
     button_logout = tk.Button(game, text = "<--", command=difficulty)
     button_logout.place(x=0, y=0)
 
@@ -241,9 +246,9 @@ def get_guess_easy():
 
     global tries
     if tries < 10:
-        guess_frame1 = tk.Frame(game)
-        guess_frame1.place(x=320, y=80+40*tries, width=800, height=30)
 
+        guess_frame1 = tk.Frame(game)
+        guess_frame1.place(x=310, y=80+40*tries, width=800, height=30)
 
         # Checks if length of words are the same
         if len(guessed_word) != len(selected_word):
@@ -258,22 +263,25 @@ def get_guess_easy():
 
             for i, letter in enumerate(guessed_word):
 
-                win = tk.Label(guess_frame1, text=letter.upper(),font=('Arial', 10))
-                win.grid(row=tries, column=i, padx=10, pady=10)
-                win.config(bg=GREEN, fg=BLACK)
+                square_frame = tk.Frame(guess_frame1, width=20, height=20, bg=GREEN)
+                square_frame.grid(row=tries, column=i, padx=10, pady=10)
+
+                win = tk.Label(square_frame, text=letter.upper(), font=('Arial', 10), fg=BLACK, bg=GREEN)
+                win.place(relx=0.5, rely=0.5, anchor='center')
 
             xp = sum + 25
 
-              # create a variable to check if the username exists or not
+            # Create a variable to check if the username exists or not
             username_exists = False
             with open("lvl_database.txt", "r+") as lvldatafile:
                 lines = lvldatafile.readlines()
                 # Iterate over the lines 
                 # i represent the index of the current element
-                # line represent the username item that added to cart
-                # enumerate the function return an iterator that generate pair containing i and line
-                # lines is the data inside the cart file
+                # Line represent the username item that added to cart
+                # Enumerate the function return an iterator that generate pair containing i and line
+                # Lines is the data inside the cart file
                 for i, line in enumerate(lines):
+
                     if line.startswith(username):
                         xpParts = line.split(":")
                         existing_xp = xpParts[1].strip()
@@ -285,6 +293,7 @@ def get_guess_easy():
 
                 if not username_exists:
                     lvldatafile.write(f"{username}: {xp}\n")
+
                 else:
                     # Go to the beginning of the file
                     lvldatafile.seek(0)
@@ -297,6 +306,7 @@ def get_guess_easy():
 
         # Checks if letters match
         else:
+
             feedback = []
             guess_list = [*guessed_word]
             select_list = [*selected_word]
@@ -320,21 +330,27 @@ def get_guess_easy():
             guess_list = [*guessed_word]
 
             for i, (a, b) in enumerate(zip(guess_list, feedback)):
+                    
+                square_frame = tk.Frame(guess_frame1, width=20, height=20)
+                square_frame.grid(row=tries, column=i, padx=10, pady=10)
 
-                    label = tk.Label(guess_frame1, text=a.upper(),font=('Arial', 10))
-                    label.grid(row=tries, column=i, padx=10, pady=10)
+                label = tk.Label(square_frame, text=a.upper(), font=('Arial', 10))
+                label.place(relx=0.5, rely=0.5, anchor='center')
 
-                    # Letters match, same position
-                    if a == b:
-                        label.config(bg=GREEN, fg=BLACK)
+                # Letters match, same position
+                if a == b:
+                    square_frame.config(bg=GREEN)
+                    label.config(bg=GREEN, fg=BLACK)
 
-                    # Letters match, wrong position
-                    elif b == "$":
-                        label.config(bg=YELLOW, fg=BLACK)
+                # Letters match, wrong position
+                elif b == "$":
+                    square_frame.config(bg=YELLOW)
+                    label.config(bg=YELLOW, fg=BLACK)
 
-                    # Letters don't match            
-                    else:
-                        label.config(bg=BLACK, fg=WHITE)
+                # Letters don't match            
+                else:
+                    square_frame.config(bg=BLACK)
+                    label.config(bg=BLACK, fg=WHITE)
 
             tries += 1
     
@@ -342,7 +358,6 @@ def get_guess_easy():
     if tries == 10:
         messagebox.showerror("You failed!", f"The word is {selected_word.upper()}")
         difficulty()
-
 
 def gamegui_hard():
     global word_input
@@ -371,15 +386,15 @@ def gamegui_hard():
     word_input.bind('<Return>', lambda event:word_guess_button.invoke())
     
     # Button to submit guess
-    word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess_hard(username), clear_text(word_input)])
+    word_guess_button = tk.Button(frame4, text="Submit",cursor='hand2', command=lambda:[get_guess_hard(), clear_text(word_input)])
     word_guess_button.place(x=380, y=435)
 
-    # button to return to difficulty screen
+    # Button to return to difficulty menu
     button_logout = tk.Button(game, text = "<--", command=difficulty)
     button_logout.place(x=0, y=0)
 
 # Game logic
-def get_guess_hard(username):
+def get_guess_hard():
     global xp
     global new_xp 
     global existing_xp
@@ -393,9 +408,9 @@ def get_guess_hard(username):
 
     global tries
     if tries < 5:
-        guess_frame2 = tk.Frame(game)
-        guess_frame2.place(x=290, y=110+50*tries, width=800, height=50)
 
+        guess_frame2 = tk.Frame(game)
+        guess_frame2.place(x=265, y=110+50*tries, width=800, height=50)
 
         # Checks if length of words are the same
         if len(guessed_word) != len(selected_word):
@@ -409,10 +424,12 @@ def get_guess_hard(username):
         elif guessed_word == selected_word:
 
             for i, letter in enumerate(guessed_word):
+            
+                square_frame = tk.Frame(guess_frame2, width=20, height=20, bg=GREEN)
+                square_frame.grid(row=tries, column=i, padx=10, pady=10)
 
-                win = tk.Label(guess_frame2, text=letter.upper(),font=('Arial', 10))
-                win.grid(row=tries, column=i, padx=10, pady=10)
-                win.config(bg=GREEN, fg=BLACK)
+                win = tk.Label(square_frame, text=letter.upper(), font=('Arial', 10), fg=BLACK, bg=GREEN)
+                win.place(relx=0.5, rely=0.5, anchor='center')
 
             xp = sum + 100
             username_exists = False
@@ -421,10 +438,11 @@ def get_guess_hard(username):
 
                 # Iterate over the lines 
                 # i represent the index of the current element
-                # line represent the username item that added to cart
-                # enumerate the function return an iterator that generate pair containing i and line
-                # lines is the data inside the cart file
+                # Line represent the username item that added to cart
+                # Enumerate the function return an iterator that generate pair containing i and line
+                # Lines is the data inside the cart file
                 for i, line in enumerate(lines):
+
                     if line.startswith(username):
                         xpParts = line.split(":")
                         existing_xp = xpParts[1].strip()
@@ -433,7 +451,6 @@ def get_guess_hard(username):
                         lines[i] = new_line
                         # Set the flag to True
                         username_exists = True
-            
 
                 if not username_exists:
                     lvldatafile.write(f"{username}: {xp}\n")
@@ -444,7 +461,6 @@ def get_guess_hard(username):
                     # Write the lines back to the file
                     lvldatafile.writelines(lines)
                     lvldatafile.close()
-
 
             messagebox.showinfo("Congratulations!", "You guessed the word!")
             pro_bargui(existing_xp)
@@ -476,20 +492,26 @@ def get_guess_hard(username):
 
             for i, (a, b) in enumerate(zip(guess_list, feedback)):
 
-                    label = tk.Label(guess_frame2, text=a.upper(),font=('Arial', 10))
-                    label.grid(row=tries, column=i, padx=10, pady=10)
+                square_frame = tk.Frame(guess_frame2, width=20, height=20)
+                square_frame.grid(row=tries, column=i, padx=10, pady=10)
 
-                    # Letters match, same position
-                    if a == b:
-                        label.config(bg=GREEN, fg=BLACK)
+                label = tk.Label(square_frame, text=a.upper(), font=('Arial', 10))
+                label.place(relx=0.5, rely=0.5, anchor='center')
 
-                    # Letters match, wrong position
-                    elif b == "$":
-                        label.config(bg=YELLOW, fg=BLACK)
+                # Letters match, same position
+                if a == b:
+                    square_frame.config(bg=GREEN)
+                    label.config(bg=GREEN, fg=BLACK)
 
-                    # Letters don't match            
-                    else:
-                        label.config(bg=BLACK, fg=WHITE)
+                # Letters match, wrong position
+                elif b == "$":
+                    square_frame.config(bg=YELLOW)
+                    label.config(bg=YELLOW, fg=BLACK)
+
+                # Letters don't match            
+                else:
+                    square_frame.config(bg=BLACK)
+                    label.config(bg=BLACK, fg=WHITE)
 
             tries += 1
 
@@ -497,8 +519,6 @@ def get_guess_hard(username):
     if tries == 5:
         messagebox.showerror("You failed!", f"The word is {selected_word.upper()}")
         difficulty()
-
-
 
 def pro_bargui(existing_xp):
 
@@ -526,6 +546,7 @@ def pro_bargui(existing_xp):
     def pro_bar(new_xp,xp):
         xp2 = 100 - (xp1 % xp_to_level_up) 
         xp3 = 100 - (new_xp % 100)
+
         if xp == 100 or xp >= xp2 :
             # If level up, reset start XP to remaining XP and increase level by 1
             level_label.config(text=f"Level: {new_xp //100}")
@@ -536,11 +557,9 @@ def pro_bargui(existing_xp):
             level_label.config(text=f"Level: {new_xp //100}")
             progress["value"] = new_xp % 100
             tk.messagebox.showinfo("Level Up!", f"You need {xp3} xp to reach next level!")
-            
 
         button = tk.Button(frame25, text="                Back to Menu                ", command=lambda: difficulty())
         button.place(relx=0.5, rely=0.7, anchor="center")
-
 
 # Login page
 def login():
@@ -576,7 +595,6 @@ def login():
     no_account.place(x=430, y=399)
 
 # Login authentication function
-# Login authentication function
 def authentication():   
     db = open("database.txt","r")
     global username
@@ -585,12 +603,14 @@ def authentication():
     
     d = [] #empty list to store Username
     p = [] #empty list to store password
+
     for i in db: #to split my text in database
         a,b = i.split(",")
         b = b.strip() #to remove the character infront the username so that username can stand alone
         #append the usename and password into the text file
         d.append(a)
         p.append(b)
+
     data = dict(zip(d, p))# make it to the pair and read the data
 
     try:
@@ -603,16 +623,21 @@ def authentication():
             else:
                 if messagebox.askyesno("Error", "Password or Username incorrect. Do you want to try again?", icon='error') == True:
                     login()
+
                 else:
                     home()
+
         else:
             if messagebox.askyesno("Error", "Username or password doesn't exist. Do you want to try again?", icon='error') == True:
                 login()
+
             else:
                 home()
+
     except:
         if messagebox.askyesno("Error", "Username or password doesn't exist. Do you want to try again?", icon='error') == True:
             login()
+
         else:
             home()    
 
@@ -641,8 +666,6 @@ def signup():
     e4.place(x=400, y=255)
     e4.bind('<Return>', lambda event: e5.focus())
 
-
-
     conf_password = tk.Label(frame2, text='Confirm Password', font=('Arial', 10))
     conf_password.place(x=225, y=315)
     e5 = tk.Entry(frame2, show='*')
@@ -665,17 +688,21 @@ def newaccount():
         
     d = [] #empty list to store Username
     p = [] #empty list to store password
+
     for i in db: #to split my text in database
+
         a,b = i.split(",")
         b = b.strip() #to remove the character infront the username so that username can stand alone
         #append the usename and password into the text file
         d.append(a)
         p.append(b)
+
     data = dict(zip(d, p))# make it to the pair and read the data 
 
-    if(new_password != new_conf_password): 
+    if(new_password != new_conf_password):
         if messagebox.askyesno("Access Denied", "Passswords must match. Do you wish to try again?", icon='error') == True:
             signup()
+
         else:
             home()
 
@@ -710,22 +737,25 @@ def newaccount():
             lvl_db = open ("lvl_database.txt","a+")
             lvl_db.write(new_username+":"+user_xp+"\n")
             lvl_db.close()
+
             if messagebox.askyesno("Access Permitted!", "Account created successfully! Do you wish to login?", icon='info') == True:
                 login()
+                
             else:
-                home()   
+                home()
+                
             print("Success!")
 
 def difficulty():
     frame10 = tk.Frame(game)
     frame10.place(x=0, y=0, width=800, height=600)
 
-    # title
+    # Title
     title_label = ttk.Label(frame10, text = "Choose your Difficulty level", font = "Calibri 24 bold") # font = "font fontsize"
     title_label.pack(pady = 30)
 
-    # difficulty descriptions
-    # easy
+    # Difficulty descriptions
+    # Easy difficulty
     level_frame = ttk.Frame(frame10)
     button1 = tk.Button(
         level_frame,
@@ -735,18 +765,17 @@ def difficulty():
         background= LIGHTGREEN,
         font=('Calibri', 15, 'bold'), 
         cursor='hand2',
-        command=gamegui_easy) # add command to go to hard lvl
+        command=gamegui_easy) # Adds command to go to easy difficulty
 
     description = ttk.Label(
         level_frame, 
         text = "- Guess a 5 letter word\n- Complete within 10 tries")
 
-
     button1.pack(side = "left", padx = 20)
     description.pack(side = "right")
     level_frame.pack(pady = 20)
 
-    #default
+    # Default difficulty
     level_frame = ttk.Frame(frame10)
     button = tk.Button(
         level_frame,
@@ -756,7 +785,7 @@ def difficulty():
         background= LIGHTORANGE,
         font=('Calibri', 15, 'bold'), 
         cursor='hand2',
-        command=gamegui) # add command to go to hard lvl
+        command=gamegui) # Adds command to go to default difficulty
 
     description = ttk.Label(
         level_frame, 
@@ -766,7 +795,7 @@ def difficulty():
     description.pack(side = "left", padx = 5)
     level_frame.pack(pady = 20)
 
-    # hard
+    # Hard difficulty
     level_frame = ttk.Frame(frame10)
     button = tk.Button(
         level_frame,
@@ -776,12 +805,11 @@ def difficulty():
         background= LIGHTRED,
         font=('Calibri', 15, 'bold'),
         cursor='hand2',
-        command=gamegui_hard) # add command to go to hard lvl
+        command=gamegui_hard) # Adds command to go to hard difficulty
 
     description = ttk.Label(
         level_frame, 
         text = "- Guess a 7+ letter word\n- Complete within 5 tries")
-
 
     button.pack(side = "left", padx = 15)
     description.pack(side = "left", padx = 5)
@@ -821,9 +849,9 @@ def leaderboard():
     line0 = tk.Label(frame35, text="Leaderboard", font=('Arial', 40))
     line0.place(x=255, y=30)
 
-    # create a custom style
+    # Create a custom style
     style = ttk.Style()
-    # configure the Treeview background color in the style
+    # Configure the Treeview background color in the style
     style.configure('Treeview', background='light blue',font=('Arial', 10,'bold'))
     style.configure('Treeview.Heading', font=('Arial', 16,'bold'))
     
@@ -854,8 +882,8 @@ def leaderboard():
 
             
 def sign_out():
-    # clear the user's authentication status
-    # for example, by setting a global variable to None
+    # Clear the user's authentication status
+    # For example, by setting a global variable to None
     global username
     username = None
     home()

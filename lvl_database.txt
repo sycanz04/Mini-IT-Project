@@ -8,4 +8,4 @@ burger:50
 hand:75
 wolf:225
 sleep:50
-kioku:50
+kioku:125
